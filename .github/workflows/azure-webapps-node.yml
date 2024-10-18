@@ -44,11 +44,11 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-        npm install
-        chmod +x ./node_modules/.bin/mocha # Agregar permisos de ejecución
-        npm audit fix # Intentar arreglar vulnerabilidades
-        npm run build --if-present
-        npm run test --if-present
+          npm install
+          npm audit fix  # Corrige vulnerabilidades
+          chmod +x ./node_modules/.bin/mocha
+          npm run build --if-present
+          npm run test --if-present
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
