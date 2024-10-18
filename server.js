@@ -20,7 +20,7 @@ var io = require('socket.io')(http); // Socket.io en el mismo servidor
 const OKTA_ISSUER_URI = "https://dev-mxomfpblzdszj2r8.us.auth0.com/"
 const OKTA_CLIENT_ID = "p1Wa0GDyBMGizph54fvn1ZfSd6e3HAuD";
 const OKTA_CLIENT_SECRET = "G5w-A6PF1EBhJcouciujjLHRS0_CkCHWjuck_h1vbUZ-IMo1aydrHyJa47HpScZF";
-const REDIRECT_URI = "http://localhost:3000/dashboard";
+const REDIRECT_URI = "https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/";
 const PORT = process.env.PORT || "3000";
 const SECRET = "hjsadfghjakshdfg87sd8f76s8d7f68s7f632342ug44gg423636346f"; // Dejar el secret así como está.
 
@@ -29,7 +29,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: SECRET,
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/',
   clientID: OKTA_CLIENT_ID,
   issuerBaseURL: OKTA_ISSUER_URI,
   routes: {
@@ -37,7 +37,7 @@ const config = {
     logout: '/logout'  // Cambiado a string simple
   },
   logoutParams: {
-    returnTo: 'http://localhost:3000'
+    returnTo: 'https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/'
   }
 };
 
@@ -46,7 +46,7 @@ let oidc = new ExpressOIDC({
   client_id: OKTA_CLIENT_ID,
   client_secret: OKTA_CLIENT_SECRET,
   redirect_uri: REDIRECT_URI,
-  routes: { callback: { defaultRedirect: "http://localhost:3000/dashboard" } },
+  routes: { callback: { defaultRedirect: "https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/" } },
   scope: 'openid profile'
 });
 
