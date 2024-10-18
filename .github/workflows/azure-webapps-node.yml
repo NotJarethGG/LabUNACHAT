@@ -44,7 +44,6 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-          npm install
           npm audit fix 
           chmod +x ./node_modules/.bin/mocha
           npm run build --if-present
