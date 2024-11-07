@@ -18,6 +18,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "mocha"
+    "lint": "eslint ."
   },
   "author": "UNA",
   "license": "MIT"
