@@ -20,5 +20,8 @@
     "test": "mocha"
   },
   "author": "UNA",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^9.14.0"
+  }
 }

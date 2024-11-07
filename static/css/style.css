@@ -1,7 +1,189 @@
-h1 {
-  margin-top: 2em;
+/* Variables de colores */
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #2c3e50;
+  --accent-color: #e74c3c;
+  --light-color: #f8f9fa;
+  --dark-color: #2c3e50;
 }
 
-.jumbotron {
-  margin-top: 2em;
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--dark-color);
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--primary-color);
+  padding: 1rem 0;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #4a90e2 0%, #2c3e50 100%);
+  color: white;
+  padding: 6rem 0;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  animation: fadeInUp 1s ease-out 0.2s;
+}
+
+.hero-image {
+  text-align: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+.hero-image i {
+  font-size: 15rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Botones CTA */
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  animation: fadeInUp 1s ease-out 0.4s;
+}
+
+.btn-primary-custom, .btn-secondary-custom {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-custom {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-primary-custom:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  color: white;
+}
+
+.btn-secondary-custom {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.btn-secondary-custom:hover {
+  background-color: white;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* Features Section */
+.features-section {
+  padding: 5rem 0;
+  background-color: var(--light-color);
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--secondary-color);
+  font-weight: 700;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--dark-color);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+      transform: translateY(0px);
+  }
+  50% {
+      transform: translateY(-20px);
+  }
+  100% {
+      transform: translateY(0px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+      font-size: 2.5rem;
+  }
+  
+  .hero-image i {
+      font-size: 10rem;
+  }
+  
+  .cta-buttons {
+      flex-direction: column;
+  }
+  
+  .btn-primary-custom, .btn-secondary-custom {
+      width: 100%;
+      text-align: center;
+  }
 }
