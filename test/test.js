@@ -1,5 +1,3 @@
-/* eslint-env node, mocha */
-/* global require, describe, it */
 
 var val = require('../unalib');
 var assert = require('assert');
