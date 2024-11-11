@@ -2,17 +2,30 @@
 "use strict";
 
 // Imports
-const express = require("express");
-const session = require("express-session");
-const { ExpressOIDC } = require("@okta/oidc-middleware");
-const { auth, requiresAuth } = require('express-openid-connect');
-const cons = require('consolidate');
-const path = require('path');
+import express from "express";
+import session from "express-session";
+import pkg from '@okta/oidc-middleware';  // Importamos Okta de esta forma
+import openid from 'express-openid-connect';  // Importamos el paquete completo de express-openid-connect
+import cons from 'consolidate';
+import path from 'path';
+import { fileURLToPath } from 'url'; // Import para obtener __dirname en ESModules
+import { dirname } from 'path'; // Import para obtener __dirname en ESModules
+import { Issuer } from 'openid-client'; // Cambio a import
+import http from 'http'; // Cambio a import
+import { Server } from 'socket.io'; // Cambio a import
+
+const { ExpressOIDC } = pkg;  // Desestructuramos después de importar el paquete completo
+const { auth, requiresAuth } = openid;  // Desestructuramos auth y requiresAuth
+
 let app = express(); // Inicialización de app
 
+// Obtener __dirname en ESModules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 // Crear servidor HTTP y asociar Socket.io al mismo servidor
-const http = require('http').Server(app);
-const io = require('socket.io')(http); // Socket.io en el mismo servidor
+const httpServer = http.createServer(app);
+const io = new Server(httpServer); // Utilizando la versión de importación
 
 // Globals
 const OKTA_ISSUER_URI = "https://dev-mxomfpblzdszj2r8.us.auth0.com/";
@@ -86,7 +99,6 @@ app.get("/unaChat", (req, res) => {
   res.render("unaChat", { user: userInfo });
 });
 
-const { Issuer } = require('openid-client');
 Issuer.defaultHttpOptions.timeout = 20000;
 
 // Socket.io connection
@@ -107,7 +119,7 @@ io.on('connection', function(socket){
 // Iniciar el servidor en el puerto 3000
 oidc.on("ready", () => {
   console.log("Auth server running on port: " + PORT);
-  http.listen(PORT, () => {
+  httpServer.listen(PORT, () => {
     console.log('Servidor corriendo en el puerto: ' + PORT);
   });
 });
