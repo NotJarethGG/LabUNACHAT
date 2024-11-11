@@ -2,7 +2,8 @@
 // var val = require('../unalib');
 // var assert = require('assert');
 
-import val from '../unalib';
+import val from '../unalib/index.js'; // Asegúrate de especificar el archivo exacto si está en un subdirectorio
+
 import assert from 'assert';
 
 
