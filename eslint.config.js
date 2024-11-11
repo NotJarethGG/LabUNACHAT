@@ -1,15 +1,15 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
 
-/** @type {import('eslint').Linter.Config[]} */
+/** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   {
     files: ["**/*.js"],
     languageOptions: {
-      sourceType: "module",  // Cambiado a 'module' si usas `import`/`export`
-      globals: globals.node, // Activa el entorno de Node.js
+      sourceType: "module",           // Define el tipo de módulo, si es necesario.
+      globals: globals.node,           // Habilita las variables globales de Node.js
+      ecmaVersion: "latest",           // Opcional: Define la versión de ECMAScript a utilizar
     },
-    env: { node: true }, // Activa el entorno para Node.js
   },
   pluginJs.configs.recommended,
 ];
