@@ -1,30 +1,28 @@
+/* eslint-env node */
 "use strict";
 
 // Imports
-var unalibValidator = require('./unalib');
-
 const express = require("express");
 const session = require("express-session");
-const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
+const { ExpressOIDC } = require("@okta/oidc-middleware");
 const { auth, requiresAuth } = require('express-openid-connect');
 const cons = require('consolidate');
 const path = require('path');
 let app = express(); // Inicialización de app
 
 // Crear servidor HTTP y asociar Socket.io al mismo servidor
-var http = require('http').Server(app);
-var io = require('socket.io')(http); // Socket.io en el mismo servidor
-
+const http = require('http').Server(app);
+const io = require('socket.io')(http); // Socket.io en el mismo servidor
 
 // Globals
-const OKTA_ISSUER_URI = "https://dev-mxomfpblzdszj2r8.us.auth0.com/"
+const OKTA_ISSUER_URI = "https://dev-mxomfpblzdszj2r8.us.auth0.com/";
 const OKTA_CLIENT_ID = "p1Wa0GDyBMGizph54fvn1ZfSd6e3HAuD";
 const OKTA_CLIENT_SECRET = "G5w-A6PF1EBhJcouciujjLHRS0_CkCHWjuck_h1vbUZ-IMo1aydrHyJa47HpScZF";
 const REDIRECT_URI = "https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/";
 const PORT = process.env.PORT || "3000";
 const SECRET = "hjsadfghjakshdfg87sd8f76s8d7f68s7f632342ug44gg423636346f"; // Dejar el secret así como está.
 
-//  Esto se los dará Okta.
+// Esto se los dará Okta.
 const config = {
   authRequired: false,
   auth0Logout: true,
@@ -88,8 +86,8 @@ app.get("/unaChat", (req, res) => {
   res.render("unaChat", { user: userInfo });
 });
 
-const openIdClient = require('openid-client');
-openIdClient.Issuer.defaultHttpOptions.timeout = 20000;
+const { Issuer } = require('openid-client');
+Issuer.defaultHttpOptions.timeout = 20000;
 
 // Socket.io connection
 io.on('connection', function(socket){
