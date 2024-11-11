@@ -1,6 +1,10 @@
 
-var val = require('../unalib');
-var assert = require('assert');
+// var val = require('../unalib');
+// var assert = require('assert');
+
+import val from '../unalib';
+import assert from 'assert';
+
 
 describe('unalib', function() {
     describe('funcion_is_valid_phone', function() {
