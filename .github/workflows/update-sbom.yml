@@ -3,7 +3,7 @@ name: Update SBOM
 on:
   push:
     branches:
-      - master  # Ejecutar en la rama principal, ajusta si es necesario
+      - master  
   pull_request:
     branches:
       - master
@@ -24,8 +24,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Instala la herramienta SBOM, ajusta el comando si la instalación es diferente
+      - name: Install sbom-tool
+        run: |
+          wget https://github.com/microsoft/sbom-tool/releases/download/v1.0.4/sbom-tool-linux-x64  # Ejemplo, ajusta la URL a la última versión o al sistema operativo correcto
+          chmod +x sbom-tool-linux-x64
+          sudo mv sbom-tool-linux-x64 /usr/local/bin/sbom-tool
+
       - name: Generate SBOM
-        run: npm run generate-sbom  # Asegúrate de que este comando genera el archivo sbom.json
+        run: sbom-tool generate -b . -bc ./ -pn "ProjectName" -pv "1.0" -ps "ProjectScope" -o sbom.json
 
       - name: Commit and push updated SBOM
         run: |
