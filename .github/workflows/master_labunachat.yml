@@ -100,6 +100,7 @@ jobs:
           severity: 'HIGH,CRITICAL'
           hide-progress: true
           timeout: '10m'
+          skip-db-update: true
 
   deploy:
     runs-on: ubuntu-latest
