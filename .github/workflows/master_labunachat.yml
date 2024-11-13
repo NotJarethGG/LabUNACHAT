@@ -78,8 +78,21 @@ jobs:
       - name: Run tests
         run: npm test
 
+  scan:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Install Grype scanner
+        run: |
+          curl -sSfL https://github.com/anchore/grype/releases/download/v0.66.0/grype-linux-amd64-0.66.0.tar.gz | tar -xz -C /usr/local/bin
+          
+      - name: Scan Docker image with Grype
+        run: grype ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+
   deploy:
     runs-on: ubuntu-latest
+    needs: scan
     environment:
       name: 'Production'
     permissions:
