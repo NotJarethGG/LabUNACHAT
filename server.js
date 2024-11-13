@@ -1,9 +1,9 @@
 /* eslint-env node */
-"use strict";
+'use strict';
 
 // Imports
-import express from "express";
-import session from "express-session";
+import express from 'express';
+import session from 'express-session';
 import pkg from '@okta/oidc-middleware';  // Importamos Okta de esta forma
 import openid from 'express-openid-connect';  // Importamos el paquete completo de express-openid-connect
 import cons from 'consolidate';
@@ -28,12 +28,12 @@ const httpServer = http.createServer(app);
 const io = new Server(httpServer); // Utilizando la versión de importación
 
 // Globals
-const OKTA_ISSUER_URI = "https://dev-mxomfpblzdszj2r8.us.auth0.com/";
-const OKTA_CLIENT_ID = "p1Wa0GDyBMGizph54fvn1ZfSd6e3HAuD";
-const OKTA_CLIENT_SECRET = "G5w-A6PF1EBhJcouciujjLHRS0_CkCHWjuck_h1vbUZ-IMo1aydrHyJa47HpScZF";
-const REDIRECT_URI = "https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/";
-const PORT = process.env.PORT || "3000";
-const SECRET = "hjsadfghjakshdfg87sd8f76s8d7f68s7f632342ug44gg423636346f"; // Dejar el secret así como está.
+const OKTA_ISSUER_URI = 'https://dev-mxomfpblzdszj2r8.us.auth0.com/';
+const OKTA_CLIENT_ID = 'p1Wa0GDyBMGizph54fvn1ZfSd6e3HAuD';
+const OKTA_CLIENT_SECRET = 'G5w-A6PF1EBhJcouciujjLHRS0_CkCHWjuck_h1vbUZ-IMo1aydrHyJa47HpScZF';
+const REDIRECT_URI = 'https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/';
+const PORT = process.env.PORT || '3000';
+const SECRET = 'hjsadfghjakshdfg87sd8f76s8d7f68s7f632342ug44gg423636346f'; // Dejar el secret así como está.
 
 // Esto se los dará Okta.
 const config = {
@@ -57,7 +57,7 @@ let oidc = new ExpressOIDC({
   client_id: OKTA_CLIENT_ID,
   client_secret: OKTA_CLIENT_SECRET,
   redirect_uri: REDIRECT_URI,
-  routes: { callback: { defaultRedirect: "https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/" } },
+  routes: { callback: { defaultRedirect: 'https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/' } },
   scope: 'openid profile'
 });
 
@@ -71,7 +71,7 @@ app.set('models', path.join(__dirname, 'models'));
 app.set('view engine', 'html');
 
 // App middleware
-app.use("/static", express.static("static"));
+app.use('/static', express.static('static'));
 app.use(session({
   cookie: { httpOnly: true },
   secret: SECRET
@@ -80,23 +80,23 @@ app.use(session({
 // App routes
 app.use(oidc.router);
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get('/', (req, res) => {
+  res.render('index');
 });
 
-app.get("/dashboard", requiresAuth(), (req, res) => {
+app.get('/dashboard', requiresAuth(), (req, res) => {
   var payload = Buffer.from(req.appSession.id_token.split('.')[1], 'base64').toString('utf-8');
   const userInfo = JSON.parse(payload);
-  res.render("dashboard", { user: userInfo });
+  res.render('dashboard', { user: userInfo });
 });
 
-app.get("/unaChat", (req, res) => {
+app.get('/unaChat', (req, res) => {
   if (!req.oidc.isAuthenticated()) {
     return res.redirect('/'); // Redirigir a login en lugar de index
   }
-  
+
   const userInfo = req.oidc.user; // Forma más segura de obtener la info del usuario
-  res.render("unaChat", { user: userInfo });
+  res.render('unaChat', { user: userInfo });
 });
 
 Issuer.defaultHttpOptions.timeout = 20000;
@@ -117,13 +117,13 @@ io.on('connection', function(socket){
 });
 
 // Iniciar el servidor en el puerto 3000
-oidc.on("ready", () => {
-  console.log("Auth server running on port: " + PORT);
+oidc.on('ready', () => {
+  console.log('Auth server running on port: ' + PORT);
   httpServer.listen(PORT, () => {
     console.log('Servidor corriendo en el puerto: ' + PORT);
   });
 });
 
-oidc.on("error", err => {
+oidc.on('error', err => {
   console.error(err);
 });

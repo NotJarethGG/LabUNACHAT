@@ -67,15 +67,15 @@ export default {
     var obj = JSON.parse(msg);
 
     if(this.is_valid_url_image(obj.mensaje)){
-      console.log("Es una imagen!")
+      console.log('Es una imagen!');
       obj.mensaje = this.getImageTag(obj.mensaje);
     }
     else if(this.is_valid_yt_video(obj.mensaje)){
-      console.log("Es un video!")
+      console.log('Es un video!');
       obj.mensaje = this.getEmbeddedCode(obj.mensaje);
     }
     else{
-      console.log("Es un texto!")
+      console.log('Es un texto!');
     }
 
     return JSON.stringify(obj);
