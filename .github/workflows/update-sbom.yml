@@ -24,16 +24,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Instala la herramienta SBOM, ajusta el comando si la instalación es diferente
       - name: Install sbom-tool
         run: |
-          wget https://github.com/microsoft/sbom-tool/releases/download/v3.0.1/sbom-tool-linux-x64
-          chmod +x sbom-tool-linux-x64
-          sudo mv sbom-tool-linux-x64 /usr/local/bin/sbom-tool
-
+          wget https://github.com/microsoft/sbom-tool/releases/download/v3.0.1/sbom-tool-linux-x64 -O sbom-tool
+          chmod +x sbom-tool
+          sudo mv sbom-tool /usr/local/bin/
 
       - name: Generate SBOM
-        run: sbom-tool generate -b . -bc ./ -pn "ProjectName" -pv "1.0" -ps "ProjectScope" -o sbom.json
+        run: sbom-tool generate --build-component-path . --build-component-source-path ./ --package-name "ProjectName" --package-version "1.0" --package-scope "ProjectScope" --output-file sbom.json
 
       - name: Commit and push updated SBOM
         run: |
