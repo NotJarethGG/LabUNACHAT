@@ -95,12 +95,13 @@ jobs:
         with:
           image-ref: '${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest'
           format: 'table'
-          exit-code: '0'  # No detiene el proceso al encontrar vulnerabilidades
+          exit-code: '0'
           scanners: 'vuln,secret'
           severity: 'HIGH,CRITICAL'
           hide-progress: true
           timeout: '10m'
-          skip-db-update: true
+          args: '--skip-update'  # Desactiva la descarga de la base de datos
+
 
   deploy:
     runs-on: ubuntu-latest
