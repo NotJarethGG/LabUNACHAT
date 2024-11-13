@@ -84,7 +84,7 @@ jobs:
 
     services:
       clair:
-        image: quay.io/coreos/clair:v2.1.0
+        image: quay.io/cncf/clair:v4.3.0
         options: --privileged
 
     steps:
