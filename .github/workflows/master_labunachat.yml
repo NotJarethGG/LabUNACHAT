@@ -78,7 +78,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-  scan:
+    scan:
     runs-on: ubuntu-latest
     needs: test
 
@@ -92,10 +92,15 @@ jobs:
           format: 'table'
           severity: 'CRITICAL,HIGH'
           ignore-unfixed: true
-          
-      - name: Fail if vulnerabilities are found
-        if: failure()
-        run: exit 1
+
+      - name: Cache Trivy database
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/trivy
+          key: cache-trivy-${{ github.run_id }}
+
+      - name: Run vulnerability scan with Trivy
+        run: trivy image --cache-dir ~/.cache/trivy ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
 
   deploy:
     runs-on: ubuntu-latest
