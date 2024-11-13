@@ -26,7 +26,7 @@ jobs:
 
       - name: Install sbom-tool
         run: |
-          wget https://github.com/microsoft/sbom-tool/releases/download/v3.0.1/sbom-tool-linux-x64 -O sbom-tool
+          wget https://github.com/microsoft/sbom-tool/releases/download/v3.0.0/sbom-tool-linux-x64 -O sbom-tool
           chmod +x sbom-tool
           sudo mv sbom-tool /usr/local/bin/
 
