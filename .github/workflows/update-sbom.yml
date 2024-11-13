@@ -31,7 +31,8 @@ jobs:
           sudo mv sbom-tool /usr/local/bin/
 
       - name: Generate SBOM
-        run: sbom-tool generate -b . -bc ./ -pn "ProjectName" -pv "1.0" -ps "ProjectScope" -o sbom.json
+        run: sbom-tool generate -b . -bc ./ -pn "ProjectName" -pv "1.0" -ps "ProjectScope" > sbom.json
+
 
 
       - name: Commit and push updated SBOM
