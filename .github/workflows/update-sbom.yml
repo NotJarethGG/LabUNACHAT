@@ -27,9 +27,10 @@ jobs:
       # Instala la herramienta SBOM, ajusta el comando si la instalación es diferente
       - name: Install sbom-tool
         run: |
-          wget https://github.com/microsoft/sbom-tool/releases/download/v1.0.4/sbom-tool-linux-x64  # Ejemplo, ajusta la URL a la última versión o al sistema operativo correcto
+          wget https://github.com/microsoft/sbom-tool/releases/download/v1.1.3/sbom-tool-linux-x64
           chmod +x sbom-tool-linux-x64
           sudo mv sbom-tool-linux-x64 /usr/local/bin/sbom-tool
+
 
       - name: Generate SBOM
         run: sbom-tool generate -b . -bc ./ -pn "ProjectName" -pv "1.0" -ps "ProjectScope" -o sbom.json
