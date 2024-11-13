@@ -19,7 +19,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "mocha",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "generate-sbom": "sbom-tool generate -o sbom.json"
   },
   "author": "UNA",
   "license": "MIT",
