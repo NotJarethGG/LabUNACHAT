@@ -90,9 +90,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F9F8CBB729C242BBAF276EEC9F841F32 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F80FC5E87EA347F287FD3BD2FD90DE8C }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BFFD7CB3E71940558F4B7EFABC230DBC }}
 
       - name: Deploy Docker image to Azure Web App
         uses: azure/webapps-deploy@v3
