@@ -93,16 +93,15 @@ jobs:
       - name: Pull Docker image
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
 
-      - name: Run Trivy vulnerability scanner in fs mode
+      - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: '${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest'
           format: 'table'
           exit-code: '0'
-          skip-db-update: true
-          skip-files: true
-          scanners: '--scanners=config,secret,vuln'
-          no-progress: true
+          scanners: 'vuln,secret'
+          severity: 'HIGH,CRITICAL'
+          hide-progress: true
           timeout: '10m'
 
   deploy:
