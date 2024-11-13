@@ -1,0 +1,24 @@
+{
+    "sonarlint.rules": {
+      "javascript:S1523": "on",   // Detecta posibles vulnerabilidades de seguridad
+      "javascript:S2092": "on",   // Evita el uso de eval() por razones de seguridad
+      "javascript:S3696": "on",   // Verifica expresiones regulares seguras
+      "javascript:S2755": "on",   // Detecta inyecciones en consultas SQL
+      "javascript:S5334": "on",   // Evita exposición de variables sensibles
+      "javascript:S6355": "on",   // Detecta posibles XSS en el HTML
+      "javascript:S1075": "on",   // Detecta rutas de archivos de forma insegura
+      "javascript:S2681": "on",   // Activa advertencia para uso de console.log
+      "javascript:S3776": "on",   // Detecta alta complejidad cognitiva
+      "javascript:S125": "off"    // Puedes desactivar comentarios de código sin usar si prefieres
+    },
+    "sonarlint.analyzerProperties": {
+      "sonar.javascript.file.suffixes": ".js,.jsx,.ts,.tsx"   // Especifica tipos de archivos
+    },
+    "sonarlint.connectedMode": {
+      "project": {
+        "serverId": null,
+        "projectKey": null
+      }
+    }
+  }
+  
