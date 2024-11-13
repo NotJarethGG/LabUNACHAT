@@ -79,24 +79,22 @@ jobs:
         run: npm test
 
   scan:
-    runs-on: ubuntu-latest
-    needs: test
+      runs-on: ubuntu-latest
+      needs: test
 
-    services:
-      clair:
-        image: quay.io/cncf/clair:v4.3.0
-        options: --privileged
-
-    steps:
-      - name: Wait for Clair to start
-        run: |
-          # Esperar 30 segundos para que Clair inicie
-          sleep 30
-
-      - name: Scan Docker image with Clair
-        run: |
-          # Ejecuta el escaneo usando Clair en la imagen Docker
-          docker run --rm --link clair:clair quay.io/coreos/clair-scanner:v3.0.0 --clair http://clair:6060 --image ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+      steps:
+        - uses: actions/checkout@v4
+    
+        - name: Login to Anchore
+          uses: anchore/scan-action@v1
+          with:
+            image-name: ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+            ql: 'contrib/syscall_counts.js'
+            fail-build: true
+            severity-cutoff: high
+    
+        - name: Anchore inline scan JSON result
+          run: echo "${{ steps.scan.outputs.result }}"
 
   deploy:
     runs-on: ubuntu-latest
