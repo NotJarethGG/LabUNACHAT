@@ -81,16 +81,16 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     needs: test
-    
+  
     steps:
       - uses: actions/checkout@v4
   
       - name: Login to Anchore
         uses: anchore/scan-action@v2
         with:
-          image-reference: ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+          image: ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
           fail-build: true
-          severity-level: high
+          severity-cutoff: high
   
       - name: Anchore Scan Report
         run: |
