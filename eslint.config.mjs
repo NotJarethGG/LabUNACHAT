@@ -13,7 +13,7 @@ export default [
       'indent': ['error', 2],               // Indentación de 2 espacios
       'quotes': ['error', 'single'],        // Comillas simples
       'semi': ['error', 'always'],          // Punto y coma obligatorio
-      'linebreak-style': ['error', 'windows'], // Saltos de línea estilo windows (CRLF).
+      'linebreak-style': 'off',
       'eol-last': ['error', 'always'],      // Exige línea en blanco al final del archivo
       'no-trailing-spaces': 'error',        // Prohíbe espacios al final de las líneas
       'no-console': 'off',                  // Permitir console.log
