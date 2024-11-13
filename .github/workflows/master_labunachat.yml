@@ -79,22 +79,23 @@ jobs:
         run: npm test
 
   scan:
-      runs-on: ubuntu-latest
-      needs: test
-
-      steps:
-        - uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    needs: test
     
-        - name: Login to Anchore
-          uses: anchore/scan-action@v1
-          with:
-            image-name: ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
-            ql: 'contrib/syscall_counts.js'
-            fail-build: true
-            severity-cutoff: high
-    
-        - name: Anchore inline scan JSON result
-          run: echo "${{ steps.scan.outputs.result }}"
+    steps:
+      - uses: actions/checkout@v4
+  
+      - name: Login to Anchore
+        uses: anchore/scan-action@v2
+        with:
+          image-reference: ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+          fail-build: true
+          severity-level: high
+  
+      - name: Anchore Scan Report
+        run: |
+          anchore-cli image show ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+          anchore-cli evaluate check ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
 
   deploy:
     runs-on: ubuntu-latest
