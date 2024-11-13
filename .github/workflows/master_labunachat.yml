@@ -79,28 +79,24 @@ jobs:
         run: npm test
 
   scan:
-      runs-on: ubuntu-latest
-      needs: test
-  
-      steps:
-        - uses: actions/checkout@v4
-  
-        - name: Set up Trivy for vulnerability scanning
-          uses: aquasecurity/trivy-action@master
-          with:
-            image-ref: ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
-            format: 'table'
-            severity: 'CRITICAL,HIGH'
-            ignore-unfixed: true
-  
-        - name: Cache Trivy database
-          uses: actions/cache@v4
-          with:
-            path: ~/.cache/trivy
-            key: cache-trivy-${{ github.run_id }}
-  
-        - name: Run vulnerability scan with Trivy
-          run: trivy image --cache-dir ~/.cache/trivy ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Trivy for vulnerability scanning
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
+          ignore-unfixed: true
+          args: --skip-update  # Evitar la actualización de la base de datos
+
+      - name: Run vulnerability scan with Trivy
+        run: trivy image --skip-update ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+
 
   deploy:
     runs-on: ubuntu-latest
