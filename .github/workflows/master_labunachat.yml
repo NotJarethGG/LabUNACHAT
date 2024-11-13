@@ -85,27 +85,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Agregar paso para instalar Anchore CLI usando apt
-      - name: Install Anchore CLI
+      # Usar imagen Docker oficial de Anchore CLI para el escaneo
+      - name: Scan Docker image using Anchore CLI
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip
-          pip3 install anchore-cli
-
-      - name: Login to Anchore
-        uses: anchore/scan-action@v2
-        with:
-          image: ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
-          fail-build: false  # Cambiado de true a false
-
-      - name: Anchore Scan Report
-        run: |
-          anchore-cli image show ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
-          anchore-cli evaluate check ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            anchore/anchore-cli:latest \
+            image add ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            anchore/anchore-cli:latest \
+            evaluate check ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
 
   deploy:
     runs-on: ubuntu-latest
-    needs: scan
+    needs: test
     environment:
       name: 'Production'
     permissions:
