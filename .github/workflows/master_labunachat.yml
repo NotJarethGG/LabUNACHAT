@@ -80,12 +80,13 @@ jobs:
 
   scan:
     runs-on: ubuntu-latest
-    needs: build
+    needs: test
 
     steps:
       - name: Install Grype scanner
         run: |
-          curl -sSfL https://github.com/anchore/grype/releases/download/v0.66.0/grype-linux-amd64-0.66.0.tar.gz | tar -xz -C /usr/local/bin
+          GRYPE_VERSION=$(curl -s https://api.github.com/repos/anchore/grype/releases/latest | jq -r .tag_name)
+          curl -sSfL "https://github.com/anchore/grype/releases/download/$GRYPE_VERSION/grype-linux-amd64-$GRYPE_VERSION.tar.gz" | tar -xz -C /usr/local/bin
           
       - name: Scan Docker image with Grype
         run: grype ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest
