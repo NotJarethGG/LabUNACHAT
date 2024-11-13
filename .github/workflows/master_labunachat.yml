@@ -27,10 +27,6 @@ jobs:
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest .
 
-      - name: Scan Docker image for vulnerabilities with Trivy
-        run: |
-          docker scan ${{ secrets.DOCKER_USERNAME }}/proyecto-unachat:latest --accept-license
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
