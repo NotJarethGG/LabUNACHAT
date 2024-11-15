@@ -31,7 +31,7 @@ const io = new Server(httpServer); // Utilizando la versión de importación
 const OKTA_ISSUER_URI = 'https://dev-mxomfpblzdszj2r8.us.auth0.com/';
 const OKTA_CLIENT_ID = 'p1Wa0GDyBMGizph54fvn1ZfSd6e3HAuD';
 const OKTA_CLIENT_SECRET = 'G5w-A6PF1EBhJcouciujjLHRS0_CkCHWjuck_h1vbUZ-IMo1aydrHyJa47HpScZF';
-const REDIRECT_URI = 'https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/';
+const REDIRECT_URI = 'https://proyectounachat-awd3agg3fcckedc9.canadacentral-01.azurewebsites.net/';
 const PORT = process.env.PORT || '3000';
 const SECRET = 'hjsadfghjakshdfg87sd8f76s8d7f68s7f632342ug44gg423636346f'; // Dejar el secret así como está.
 
@@ -40,7 +40,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: SECRET,
-  baseURL: 'https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/',
+  baseURL: 'https://proyectounachat-awd3agg3fcckedc9.canadacentral-01.azurewebsites.net/',
   clientID: OKTA_CLIENT_ID,
   issuerBaseURL: OKTA_ISSUER_URI,
   routes: {
@@ -48,7 +48,7 @@ const config = {
     logout: '/logout'  // Cambiado a string simple
   },
   logoutParams: {
-    returnTo: 'https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/'
+    returnTo: 'https://proyectounachat-awd3agg3fcckedc9.canadacentral-01.azurewebsites.net/'
   }
 };
 
@@ -57,7 +57,7 @@ let oidc = new ExpressOIDC({
   client_id: OKTA_CLIENT_ID,
   client_secret: OKTA_CLIENT_SECRET,
   redirect_uri: REDIRECT_URI,
-  routes: { callback: { defaultRedirect: 'https://labunachat-c4c3ecdnf4ajh4gj.canadacentral-01.azurewebsites.net/' } },
+  routes: { callback: { defaultRedirect: 'https://proyectounachat-awd3agg3fcckedc9.canadacentral-01.azurewebsites.net/' } },
   scope: 'openid profile'
 });
 
@@ -94,16 +94,14 @@ app.get('/login', (req, res) => {
   res.oidc.login({ returnTo: '/unaChat' }); // Redirige al chat después de autenticarse
 });
 
-
 app.get('/unaChat', (req, res) => {
   if (!req.oidc.isAuthenticated()) {
-    return res.redirect('/'); // Redirigir a login en lugar de index
+    return res.oidc.login({ returnTo: '/unaChat' }); // Redirect to login page
   }
 
-  const userInfo = req.oidc.user; // Forma más segura de obtener la info del usuario
+  const userInfo = req.oidc.user; // Obtain user information safely
   res.render('unaChat', { user: userInfo });
 });
-
 Issuer.defaultHttpOptions.timeout = 20000;
 
 // Socket.io connection
