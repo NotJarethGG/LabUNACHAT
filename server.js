@@ -57,7 +57,7 @@ let oidc = new ExpressOIDC({
   client_id: OKTA_CLIENT_ID,
   client_secret: OKTA_CLIENT_SECRET,
   redirect_uri: REDIRECT_URI,
-  routes: { callback: { defaultRedirect: 'https://proyectounachat-awd3agg3fcckedc9.canadacentral-01.azurewebsites.net/' } },
+  routes: { callback: { defaultRedirect: '/unaChat' } },
   scope: 'openid profile'
 });
 
