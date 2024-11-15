@@ -1,4 +1,4 @@
-# Proyecto: NombreDelProyecto
+# Proyecto: UNACHAT
 
 Este proyecto utiliza herramientas de análisis de código estático (SonarLint y ESLint) para ayudar a mantener un código limpio, seguro y de alta calidad. Asegúrate de configurar correctamente el entorno de desarrollo después de hacer `pull` del repositorio.
 
