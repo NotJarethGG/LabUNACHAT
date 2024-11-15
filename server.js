@@ -90,6 +90,11 @@ app.get('/dashboard', requiresAuth(), (req, res) => {
   res.render('dashboard', { user: userInfo });
 });
 
+app.get('/login', (req, res) => {
+  res.oidc.login({ returnTo: '/unaChat' }); // Redirige al chat después de autenticarse
+});
+
+
 app.get('/unaChat', (req, res) => {
   if (!req.oidc.isAuthenticated()) {
     return res.redirect('/'); // Redirigir a login en lugar de index
