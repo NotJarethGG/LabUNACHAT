@@ -30,7 +30,8 @@ jobs:
           chmod +x sbom-tool
           sudo mv sbom-tool /usr/local/bin/
       - name: Generate SBOM
-        run: sbom-tool generate -b . -bc ./ -pn "LabUNACHAT" -pv "1.0" -ps "ProjectScope" -o sbom.json
+        run: sbom-tool generate -b . -bc ./ -pn "LabUNACHAT" -pv "1.0" -ps "ProjectScope" --output sbom.json
+
 
 
       - name: Commit and push updated SBOM
