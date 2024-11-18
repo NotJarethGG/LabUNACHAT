@@ -33,13 +33,6 @@ jobs:
       - name: Generate SBOM
         run: sbom-tool generate -b . -bc ./ -pn "LabUNACHAT" -pv "1.0" -ps "ProjectScope"
 
-      - name: List files after SBOM generation
-        run: ls -R
-
-      - name: Rename SBOM file
-        run: |
-          mv <ruta-del-archivo-generado> sbom.json
-
       - name: Commit and push updated SBOM
         run: |
           git config --global user.name "github-actions[bot]"
