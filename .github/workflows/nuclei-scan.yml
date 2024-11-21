@@ -1,0 +1,40 @@
+name: Nuclei Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Instalar Nuclei
+      - name: Install Nuclei
+        run: |
+          curl -sSfL https://github.com/projectdiscovery/nuclei/releases/download/v2.9.5/nuclei_2.9.5_linux_amd64.zip -o nuclei.zip
+          unzip nuclei.zip -d /usr/local/bin/
+          nuclei -version
+
+      # 3. Descargar plantillas de Nuclei
+      - name: Download Nuclei Templates
+        run: nuclei -ut
+
+      # 4. Ejecutar escaneo
+      - name: Run Nuclei Scan
+        run: |
+          TARGET_URL=http://example.com
+          nuclei -t /path/to/templates -u $TARGET_URL -o nuclei-report.txt
+
+      # 5. Subir el reporte como artefacto
+      - name: Upload Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuclei-scan-report
+          path: nuclei-report.txt
