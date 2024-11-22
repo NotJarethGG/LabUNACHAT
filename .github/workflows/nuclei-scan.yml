@@ -30,8 +30,8 @@ jobs:
       - name: Run Nuclei Scan
         run: |
           TARGET_URL=http://proyectounachat-awd3agg3fcckedc9.canadacentral-01.azurewebsites.net
-          nuclei -t /path/to/templates -u $TARGET_URL -o nuclei-report.txt
-
+          nuclei -u $TARGET_URL -t ./nuclei-templates -o nuclei-report.txt
+          
       # 5. Subir el reporte como artefacto
       - name: Upload Report
         uses: actions/upload-artifact@v3
