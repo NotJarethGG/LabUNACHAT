@@ -15,24 +15,33 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # 2. Instalar Nuclei
-      - name: Install Nuclei
+      # 2. Set up Nuclei
+      - name: Set up Nuclei
         run: |
-          curl -sSfL https://github.com/projectdiscovery/nuclei/releases/download/v2.9.5/nuclei_2.9.5_linux_amd64.zip -o nuclei.zip
-          unzip nuclei.zip -d /usr/local/bin/
-          nuclei -version
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://github.com/projectdiscovery/nuclei/releases/download/v3.3.5/nuclei_3.3.5_linux_amd64.zip
+          unzip nuclei_3.3.5_linux_amd64.zip
+          sudo mv nuclei /usr/local/bin/
+          nuclei -version  # Verifica la instalación
 
-      # 3. Descargar plantillas de Nuclei
+      # 3. Download Nuclei templates
       - name: Download Nuclei Templates
-        run: nuclei -ut
+        run: |
+          git clone https://github.com/projectdiscovery/nuclei-templates.git ./nuclei-templates
 
-      # 4. Ejecutar escaneo
+      # 4. List downloaded templates (for debugging)
+      - name: List downloaded templates
+        run: |
+          ls -l ./nuclei-templates
+
+      # 5. Run Nuclei scan
       - name: Run Nuclei Scan
         run: |
           TARGET_URL=http://proyectounachat-awd3agg3fcckedc9.canadacentral-01.azurewebsites.net
-          nuclei -t /path/to/templates -u $TARGET_URL -o nuclei-report.txt
+          nuclei -u $TARGET_URL -t ./nuclei-templates -o nuclei-report.txt
 
-      # 5. Subir el reporte como artefacto
+      # 6. Upload report as artifact
       - name: Upload Report
         uses: actions/upload-artifact@v3
         with:
