@@ -14,8 +14,8 @@ jobs:
 
       - name: Install Nuclei
         run: |
-          curl -sSfL https://github.com/projectdiscovery/nuclei/releases/download/v2.9.5/nuclei_2.9.5_linux_amd64.zip -o nuclei.zip
-          unzip nuclei.zip -d /usr/local/bin/
+          curl -sSfL https://github.com/projectdiscovery/nuclei/releases/download/v3.3.5/nuclei_3.3.5_linux_amd64.zip -o nuclei.zip
+          unzip -o nuclei.zip -d /usr/local/bin/
           chmod +x /usr/local/bin/nuclei
           nuclei -version
 
